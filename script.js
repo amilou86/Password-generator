@@ -1,27 +1,29 @@
 
 // string of characters which can be used within password
-const lowerCasedCharacters = ["abcdefghijklmnopqrstuvwxyz"];
-const upperCasedCharacters = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-const numericCharacters = ["0123456789"];
-const specialCharacters = ["@$%&*+?/!~_-"];
+const lowerCasedCharacters = "abcdefghijklmnopqrstuvwxyz";
+const upperCasedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numericCharacters = "0123456789";
+const specialCharacters = "@$%&*+?/!~_-";
 
 function getPasswordOptions() {
+    // asks user prompts to confirm thier password needs
     var length = prompt("Select password length between 8-128 characters?");
-    // answers to below will create booleans
     var includeLowercase = confirm("Include lowercase letters?");
     var includeUppercase = confirm("Include UPPERCASE letters?");
     var includeNumbers = confirm("Include numbers?");
     var includeSpecialChar = confirm("Include special characters?");
 
-    //   below checks if user has entered a number between 8-128 and returns alert if not. 
-    // need it to loop back to first prompt if criteria not met
-    if (isNaN(length) || length < 8 || length > 128 || !includeLowercase && !includeUppercase && !includeNumbers && !includeSpecialChar) {
-        alert("Length must be between 8 and 128 and at least one character type must be selected.");
-        return;
-    }
-}
+    // Check if conditions are met
+    if (!isNaN(length) && length >= 8 && length <= 128 && (includeLowercase || includeUppercase || includeNumbers || includeSpecialChar)) {
+        // Conditions are met, call the function to generate the password
+        var password = generatePassword(length, includeLowercase, includeUppercase, includeNumbers, includeSpecialChar);
+        console.log(password);
 
-getPasswordOptions()
+    } else {
+        alert("Length must be between 8 and 128, and at least one character type must be selected.");
+    }
+
+}
 
 // create function to generate password
 function generatePassword(length, includeLowercase, includeUppercase, includeNumbers, includeSpecialChar) {
@@ -50,14 +52,8 @@ function generatePassword(length, includeLowercase, includeUppercase, includeNum
     // create for loop to keep selecting random character from userNeeds string until meets the length specified by user and concat them to password string
     for (var i = 0; i < length; i++) {
         const randomIndex = Math.floor(Math.random() * userNeeds.length);
-        randomPassword += userNeeds[randomIndex]
+        randomPassword += userNeeds[randomIndex];
     }
-
+    return randomPassword;
 }
-
-
-
-generatePassword();
-
-//     const password = generatePassword(length, includeLowercase, includeUppercase, includeNumbers, includeSpecialChar);
-console.log(password);
+getPasswordOptions();
