@@ -57,3 +57,4 @@ function generatePassword(length, includeLowercase, includeUppercase, includeNum
     return randomPassword;
 }
 getPasswordOptions();
+
